@@ -1,0 +1,29 @@
+{
+    "name": "@agoransson/vendure-klarna-plugin",
+    "version": "0.0.1",
+    "description": "Plugin that enabled Klarna payment for Vendure ecommerce.",
+    "main": "lib/index.ts",
+    "types": "lib/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/agoransson/vendure-klarna-plugin"
+    },
+    "bugs": {
+        "url": "https://github.com/agoransson/vendure-klarna-plugin/issues"
+    },
+    "scripts": {
+        "build": "tsc",
+        "prepublishOnly": "yarn run build",
+        "lint:fix": "eslint ./src/**/*.ts --fix"
+    },
+    "author": "Andreas Goransson <andreasgoransson0@gmail.com>",
+    "license": "Apache-2",
+    "private": false,
+    "devDependencies": {
+        "tslint": "^5.12.1",
+        "typescript": "^3.3.3"
+    },
+    "files": [
+        "lib/**/*"
+    ]
+}
