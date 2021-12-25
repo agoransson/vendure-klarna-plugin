@@ -1,6 +1,6 @@
 {
     "name": "@agoransson/vendure-klarna-plugin",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "Plugin that enabled Klarna payment for Vendure ecommerce.",
     "main": "dist/index.ts",
     "types": "dist/index.d.ts",
@@ -26,7 +26,7 @@
         "typescript": "^4.5.4"
     },
     "files": [
-        "lib/**/*"
+        "dist/**/*"
     ],
     "dependencies": {
         "@agoransson/klarna-payments": "^1.0.6"
