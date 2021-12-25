@@ -1,1 +1,1 @@
-export const loggerCtx = 'KlarnaPayments';
+export const loggerCtx = 'KlarnaPaymentsPlugin';

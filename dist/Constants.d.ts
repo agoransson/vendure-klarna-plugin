@@ -1,1 +1,1 @@
-export declare const loggerCtx = "KlarnaPayments";
+export declare const loggerCtx = "KlarnaPaymentsPlugin";
