@@ -28,7 +28,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
     },
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
     createPayment: (ctx, order, amount, args, metadata) => __awaiter(void 0, void 0, void 0, function* () {
-        const gateway = Common_1.getGateway(args);
+        const gateway = (0, Common_1.getGateway)(args);
         console.log('Create payment....');
         console.log(order);
         console.log(amount);
@@ -70,7 +70,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
     }),
     // export declare type SettlePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, payment: Payment, args: ConfigArgValues<T>) => SettlePaymentResult | SettlePaymentErrorResult | Promise<SettlePaymentResult | SettlePaymentErrorResult>;
     settlePayment: (ctx, order, payment, args) => __awaiter(void 0, void 0, void 0, function* () {
-        const gateway = Common_1.getGateway(args);
+        const gateway = (0, Common_1.getGateway)(args);
         console.log('Settle payment....');
         console.log(order);
         console.log(payment);
