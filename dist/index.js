@@ -10,7 +10,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.KlarnaPaymentsPlugin = void 0;
 __exportStar(require("./klarnaPaymentMethodHandler"), exports);
 __exportStar(require("./Constants"), exports);
 __exportStar(require("./types"), exports);
+var KlarnaPaymentsPlugin_1 = require("./KlarnaPaymentsPlugin");
+Object.defineProperty(exports, "KlarnaPaymentsPlugin", { enumerable: true, get: function () { return KlarnaPaymentsPlugin_1.KlarnaPaymentsPlugin; } });
 //# sourceMappingURL=index.js.map
