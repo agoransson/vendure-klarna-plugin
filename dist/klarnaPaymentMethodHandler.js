@@ -14,6 +14,7 @@ const core_1 = require("@vendure/core");
 const klarna_payments_1 = require("@agoransson/klarna-payments");
 const generated_types_1 = require("@vendure/common/lib/generated-types");
 const Common_1 = require("./Common");
+const _1 = require(".");
 /**
  * The handler for Klarna payments.
  */
@@ -58,6 +59,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
                 purchase_country: order.billingAddress.country,
                 purchase_currency: order.currencyCode
             });
+            core_1.Logger.verbose(JSON.stringify(klarnaResponse, null, 2), _1.loggerCtx);
             return {
                 amount: order.total,
                 state: args.automaticCapture ? "Settled" : "Authorized",
@@ -70,6 +72,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
             };
         }
         catch (error) {
+            core_1.Logger.verbose(JSON.stringify(error, null, 2), _1.loggerCtx);
             return {
                 amount: order.total,
                 state: "Declined",

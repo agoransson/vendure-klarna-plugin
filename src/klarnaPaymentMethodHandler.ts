@@ -13,6 +13,7 @@ import { Locale } from '@agoransson/klarna-payments';
 import { LanguageCode } from '@vendure/common/lib/generated-types';
 import { PaymentMethodArgsHash } from './types';
 import { getGateway } from './Common';
+import { loggerCtx } from '.';
 
 /**
  * The handler for Klarna payments.
@@ -64,6 +65,8 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
                 purchase_currency: order.currencyCode
             });
 
+            Logger.verbose(JSON.stringify(klarnaResponse, null, 2), loggerCtx);
+
             return {
                 amount: order.total,
                 state: args.automaticCapture ? "Settled" : "Authorized",
@@ -75,6 +78,9 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
                 },
             };
         } catch (error) {
+
+            Logger.verbose(JSON.stringify(error, null, 2), loggerCtx);
+
             return {
                 amount: order.total,
                 state: "Declined",
