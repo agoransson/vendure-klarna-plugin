@@ -21,10 +21,21 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
     code: 'klarna-payments-provider',
     description: [{ languageCode: generated_types_1.LanguageCode.en, value: 'Klarna Payments Provider' }],
     args: {
-        isLive: { type: 'boolean' },
-        region: { type: 'string' },
-        username: { type: 'string' },
-        password: { type: 'string' }
+        isLive: {
+            type: 'boolean',
+        },
+        region: {
+            type: 'string',
+            label: [{ languageCode: generated_types_1.LanguageCode.en, value: 'klarna_region' }],
+        },
+        username: {
+            type: 'string',
+            label: [{ languageCode: generated_types_1.LanguageCode.en, value: 'klarna_username' }],
+        },
+        password: {
+            type: 'string',
+            label: [{ languageCode: generated_types_1.LanguageCode.en, value: 'klarna_password' }],
+        },
     },
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
     createPayment: (ctx, order, amount, args, metadata) => __awaiter(void 0, void 0, void 0, function* () {

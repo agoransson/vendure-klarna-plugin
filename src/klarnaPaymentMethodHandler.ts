@@ -13,19 +13,30 @@ import { Locale } from '@agoransson/klarna-payments';
 import { LanguageCode } from '@vendure/common/lib/generated-types';
 import { PaymentMethodArgsHash } from './types';
 import { getGateway } from './Common';
+
 /**
  * The handler for Klarna payments.
  */
-export const klarnaPaymentMethodHandler = new PaymentMethodHandler({
+export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMethodHandler({
     code: 'klarna-payments-provider',
     description: [{ languageCode: LanguageCode.en, value: 'Klarna Payments Provider' }],
-    args: {        
-        isLive: { type: 'boolean' },
-        region: { type: 'string' },
-        username: { type: 'string' },
-        password: { type: 'string' }
+    args: {
+        isLive: {
+            type: 'boolean',
+        },
+        region: {
+            type: 'string',
+            label: [{ languageCode: LanguageCode.en, value: 'klarna_region' }],
+        },
+        username: {
+            type: 'string',
+            label: [{ languageCode: LanguageCode.en, value: 'klarna_username' }],
+        },
+        password: {
+            type: 'string',
+            label: [{ languageCode: LanguageCode.en, value: 'klarna_password' }],
+        },
     },
-
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
 
     createPayment: async (ctx: RequestContext, order: Order, amount: number, args: PaymentMethodArgsHash, metadata: PaymentMetadata): Promise<CreatePaymentResult> => {
