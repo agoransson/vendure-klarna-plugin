@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@agoransson/klarna-payments@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@agoransson/klarna-payments/-/klarna-payments-1.0.6.tgz#cc44c818f1a217b2a7d86fa9197695d9f972f79d"
-  integrity sha512-VWdG1xi2JECc3tR14y/6U4fpGWsU6ybmstpZ+h9z9nqlvsg4RJ/fXtJ0JDGB4Y/QAGj7OBAN+sWp7Xf2ZBAO2A==
+"@agoransson/klarna-payments@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@agoransson/klarna-payments/-/klarna-payments-1.0.11.tgz#193e9f4ade52273743672c31e0295b8b73b8de2a"
+  integrity sha512-HqKRhhRyfDcnbm9r8KISJv1A04+krfrDZiQhp0ypTS25nStqbnFIWmBCg5Om7NqQK64KrBo2eZzgfSX9qkS8HQ==
   dependencies:
     axios "^0.24.0"
 

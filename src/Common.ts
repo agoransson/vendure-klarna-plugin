@@ -1,5 +1,5 @@
 import { PaymentMethodArgsHash } from "./types";
-import { Klarna } from '@agoransson/klarna-payments';
+import { Payments } from '@agoransson/klarna-payments';
 import { REGION } from "@agoransson/klarna-payments/dist/utils";
 
 export function getGateway(args: PaymentMethodArgsHash) {
@@ -9,7 +9,7 @@ export function getGateway(args: PaymentMethodArgsHash) {
     const username = args.username && typeof args.username === "string" ? args.username : undefined;
     const password = args.password && typeof args.password === "string" ? args.password : undefined;
 
-    return new Klarna({
+    return new Payments({
         config: {
             isLive: live,
             region: region,

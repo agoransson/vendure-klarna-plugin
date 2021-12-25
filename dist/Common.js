@@ -8,7 +8,7 @@ function getGateway(args) {
     const region = args.region && typeof args.region === "string" ? utils_1.REGION[args.region] : undefined;
     const username = args.username && typeof args.username === "string" ? args.username : undefined;
     const password = args.password && typeof args.password === "string" ? args.password : undefined;
-    return new klarna_payments_1.Klarna({
+    return new klarna_payments_1.Payments({
         config: {
             isLive: live,
             region: region,
