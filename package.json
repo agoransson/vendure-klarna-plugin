@@ -1,7 +1,7 @@
 {
     "name": "@agoransson/vendure-klarna-plugin",
-    "version": "0.0.13",
-    "description": "Plugin that enabled Klarna payment for Vendure ecommerce.",
+    "version": "0.0.15",
+    "description": "Plugin that enables Klarna payment for Vendure ecommerce.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "repository": {
@@ -12,14 +12,16 @@
         "url": "https://github.com/agoransson/vendure-klarna-plugin/issues"
     },
     "scripts": {
-        "build": "rm -rf dist/ && babel ./src/ --out-dir ./dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log,/.gitignore --copy-files",
-        "prepublish": "rm -rf dist/ && tsc && babel src --out-dir dist",
+        "build": "rm -rf dist/ && node ./node_modules/@babel/cli/bin/babel.js ./src/ --out-dir ./dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log,/.gitignore --copy-files",
+        "prepublish": "rm -rf dist/ && tsc && node ./node_modules/@babel/cli/bin/babel.js src --out-dir dist",
         "lint:fix": "eslint ./src/**/*.ts --fix"
     },
     "author": "Andreas Göransson (http://github.com/agoransson)",
     "license": "Apache-2.0",
     "private": false,
     "devDependencies": {
+        "@babel/cli": "^7.16.8",
+        "@babel/core": "^7.16.7",
         "@vendure/common": "^1.4.3",
         "@vendure/core": "^1.4.3",
         "tslint": "^6.1.3",

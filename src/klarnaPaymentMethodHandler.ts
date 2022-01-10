@@ -61,7 +61,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
                         unit_price: value.unitPrice
                     }
                 )),
-                purchase_country: order.billingAddress.country,
+                purchase_country: order.billingAddress.countryCode,
                 purchase_currency: order.currencyCode
             });
 
@@ -113,7 +113,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
                         unit_price: value.unitPrice
                     }
                 )),
-                purchase_country: order.billingAddress.country,
+                purchase_country: order.billingAddress.countryCode,
                 purchase_currency: order.currencyCode
             });
 

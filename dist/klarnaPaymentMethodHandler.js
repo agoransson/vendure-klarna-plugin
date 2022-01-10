@@ -56,7 +56,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
                     total_amount: value.linePrice,
                     unit_price: value.unitPrice
                 })),
-                purchase_country: order.billingAddress.country,
+                purchase_country: order.billingAddress.countryCode,
                 purchase_currency: order.currencyCode
             });
             core_1.Logger.verbose(JSON.stringify(klarnaResponse, null, 2), _1.loggerCtx);
@@ -99,7 +99,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
                     total_amount: value.linePrice,
                     unit_price: value.unitPrice
                 })),
-                purchase_country: order.billingAddress.country,
+                purchase_country: order.billingAddress.countryCode,
                 purchase_currency: order.currencyCode
             });
             if (klarnaResponse.fraud_status === "ACCEPTED") {
