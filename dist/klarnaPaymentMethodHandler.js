@@ -42,12 +42,12 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
     createPayment: (ctx, order, amount, args, metadata) => __awaiter(void 0, void 0, void 0, function* () {
         const gateway = (0, Common_1.getGateway)(args);
         console.log('Create payment....');
-        console.log(order);
-        console.log(amount);
-        console.log(args);
-        console.log(metadata);
+        // console.log(order)
+        // console.log(amount)
+        // console.log(args)
+        // console.log(metadata)
         try {
-            const klarnaResponse = yield gateway.v100.sessions.createCreditSession({
+            const data = {
                 locale: klarna_payments_1.Locale.sv_SE,
                 order_amount: order.total,
                 order_lines: order.lines.map((value) => ({
@@ -58,7 +58,9 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
                 })),
                 purchase_country: order.billingAddress.countryCode,
                 purchase_currency: order.currencyCode
-            });
+            };
+            console.log(data);
+            const klarnaResponse = yield gateway.v100.sessions.createCreditSession(data);
             core_1.Logger.verbose(JSON.stringify(klarnaResponse, null, 2), _1.loggerCtx);
             return {
                 amount: order.total,

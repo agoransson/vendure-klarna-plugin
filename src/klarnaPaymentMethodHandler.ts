@@ -44,13 +44,13 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
         const gateway = getGateway(args);
 
         console.log('Create payment....')
-        console.log(order)
-        console.log(amount)
-        console.log(args)
-        console.log(metadata)
+        // console.log(order)
+        // console.log(amount)
+        // console.log(args)
+        // console.log(metadata)
 
         try {
-            const klarnaResponse = await gateway.v100.sessions.createCreditSession({
+            const data = {
                 locale: Locale.sv_SE,
                 order_amount: order.total,
                 order_lines: order.lines.map((value) => (
@@ -63,7 +63,11 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
                 )),
                 purchase_country: order.billingAddress.countryCode,
                 purchase_currency: order.currencyCode
-            });
+            };
+
+            console.log(data);
+
+            const klarnaResponse = await gateway.v100.sessions.createCreditSession(data);
 
             Logger.verbose(JSON.stringify(klarnaResponse, null, 2), loggerCtx);
 
