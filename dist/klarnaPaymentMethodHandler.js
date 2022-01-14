@@ -59,7 +59,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
                 purchase_country: order.billingAddress.countryCode,
                 purchase_currency: order.currencyCode
             };
-            console.log(data);
+            console.log(order);
             const klarnaResponse = yield gateway.v100.sessions.createCreditSession(data);
             core_1.Logger.verbose(JSON.stringify(klarnaResponse, null, 2), _1.loggerCtx);
             return {

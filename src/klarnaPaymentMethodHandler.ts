@@ -65,7 +65,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
                 purchase_currency: order.currencyCode
             };
 
-            console.log(data);
+            console.log(order);
 
             const klarnaResponse = await gateway.v100.sessions.createCreditSession(data);
 
