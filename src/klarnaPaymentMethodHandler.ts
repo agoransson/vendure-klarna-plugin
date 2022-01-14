@@ -43,7 +43,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
     createPayment: async (ctx: RequestContext, order: Order, amount: number, args: PaymentMethodArgsHash, metadata: PaymentMetadata): Promise<CreatePaymentResult> => {
         const gateway = getGateway(args);
 
-        console.log('Create payment....')
+        // console.log('Create payment....')
         // console.log(order)
         // console.log(amount)
         // console.log(args)

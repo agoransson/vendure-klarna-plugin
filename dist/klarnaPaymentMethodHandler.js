@@ -41,7 +41,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
     createPayment: (ctx, order, amount, args, metadata) => __awaiter(void 0, void 0, void 0, function* () {
         const gateway = (0, Common_1.getGateway)(args);
-        console.log('Create payment....');
+        // console.log('Create payment....')
         // console.log(order)
         // console.log(amount)
         // console.log(args)
