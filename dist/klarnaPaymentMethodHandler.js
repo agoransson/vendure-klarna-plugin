@@ -37,6 +37,10 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
             type: 'string',
             label: [{ languageCode: generated_types_1.LanguageCode.en, value: 'klarna_password' }],
         },
+        purchase_country: {
+            type: 'string',
+            label: [{ languageCode: generated_types_1.LanguageCode.en, value: 'klarna_purchase_country' }],
+        },
     },
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
     createPayment: (ctx, order, amount, args, metadata) => __awaiter(void 0, void 0, void 0, function* () {
@@ -56,7 +60,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
                     total_amount: value.linePrice,
                     unit_price: value.unitPrice
                 })),
-                purchase_country: metadata.purchase_country,
+                purchase_country: args.purchase_country,
                 purchase_currency: order.currencyCode
             };
             const klarnaResponse = yield gateway.v100.sessions.createCreditSession(data);
@@ -100,7 +104,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
                     total_amount: value.linePrice,
                     unit_price: value.unitPrice
                 })),
-                purchase_country: order.billingAddress.countryCode,
+                purchase_country: args.purchase_country,
                 purchase_currency: order.currencyCode
             });
             if (klarnaResponse.fraud_status === "ACCEPTED") {

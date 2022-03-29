@@ -7,10 +7,10 @@ export function getGateway(args: PaymentMethodArgsHash) {
 
     Logger.debug('getGateway', JSON.stringify(args, null, 2));
 
-    const live = args.isLive && typeof args.isLive === "boolean" ? args.isLive : false;
-    const region = args.region && typeof args.region === "string" ? getRegion(args.region) : undefined;
-    const username = args.username && typeof args.username === "string" ? args.username : undefined;
-    const password = args.password && typeof args.password === "string" ? args.password : undefined;
+    const live = args.isLive as boolean;
+    const region = getRegion(args.region as string);
+    const username = args.username as string;
+    const password = args.password as string;
 
     return new Payments({
         config: {

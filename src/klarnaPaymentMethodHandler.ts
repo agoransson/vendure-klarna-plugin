@@ -37,6 +37,10 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
             type: 'string',
             label: [{ languageCode: LanguageCode.en, value: 'klarna_password' }],
         },
+        purchase_country: {
+            type: 'string',
+            label: [{ languageCode: LanguageCode.en, value: 'klarna_purchase_country' }],
+        },
     },
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
 
@@ -61,7 +65,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
                         unit_price: value.unitPrice
                     }
                 )),
-                purchase_country: metadata.purchase_country,
+                purchase_country: args.purchase_country as string,
                 purchase_currency: order.currencyCode
             };
 
@@ -115,7 +119,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
                         unit_price: value.unitPrice
                     }
                 )),
-                purchase_country: order.billingAddress.countryCode,
+                purchase_country: args.purchase_country as string,
                 purchase_currency: order.currencyCode
             });
 
