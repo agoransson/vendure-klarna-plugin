@@ -56,7 +56,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
                     total_amount: value.linePrice,
                     unit_price: value.unitPrice
                 })),
-                purchase_country: order.billingAddress.countryCode,
+                purchase_country: metadata.purchase_country,
                 purchase_currency: order.currencyCode
             };
             const klarnaResponse = yield gateway.v100.sessions.createCreditSession(data);
