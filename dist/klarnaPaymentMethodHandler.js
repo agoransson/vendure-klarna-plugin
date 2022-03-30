@@ -15,6 +15,11 @@ const klarna_payments_1 = require("@agoransson/klarna-payments");
 const generated_types_1 = require("@vendure/common/lib/generated-types");
 const Common_1 = require("./Common");
 const _1 = require(".");
+var OrderState;
+(function (OrderState) {
+    OrderState["Authorized"] = "Authorized";
+    OrderState["Settled"] = "Settled";
+})(OrderState || (OrderState = {}));
 /**
  * The handler for Klarna payments.
  */
@@ -45,11 +50,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
     createPayment: (ctx, order, amount, args, metadata) => __awaiter(void 0, void 0, void 0, function* () {
         const gateway = (0, Common_1.getGateway)(args);
-        core_1.Logger.debug('Create payment', _1.loggerCtx);
-        core_1.Logger.debug(JSON.stringify(order, null, 2), _1.loggerCtx);
-        core_1.Logger.debug(`${amount}`, _1.loggerCtx);
-        core_1.Logger.debug(JSON.stringify(args, null, 2), _1.loggerCtx);
-        core_1.Logger.debug(JSON.stringify(metadata, null, 2), _1.loggerCtx);
+        core_1.Logger.debug('createPayment() invoked', _1.loggerCtx);
         try {
             const data = {
                 locale: klarna_payments_1.Locale.sv_SE,
@@ -67,11 +68,12 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
             core_1.Logger.debug(JSON.stringify(klarnaResponse, null, 2), _1.loggerCtx);
             return {
                 amount: order.total,
-                state: args.automaticCapture ? "Settled" : "Authorized",
+                state: OrderState.Authorized,
                 transactionId: klarnaResponse.session_id,
                 metadata: {
                     public: {
-                        clientToken: klarnaResponse.client_token
+                        clientToken: klarnaResponse.client_token,
+                        payment_method_categories: klarnaResponse.payment_method_categories,
                     }
                 },
             };

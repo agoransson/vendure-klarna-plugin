@@ -15,6 +15,11 @@ import { PaymentMethodArgsHash } from './types';
 import { getGateway } from './Common';
 import { loggerCtx } from '.';
 
+enum OrderState {
+    Authorized = "Authorized",
+    Settled = "Settled"
+}
+
 /**
  * The handler for Klarna payments.
  */
@@ -47,11 +52,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
     createPayment: async (ctx: RequestContext, order: Order, amount: number, args: PaymentMethodArgsHash, metadata: PaymentMetadata): Promise<CreatePaymentResult> => {
         const gateway = getGateway(args);
 
-        Logger.debug('Create payment', loggerCtx);
-        Logger.debug(JSON.stringify(order, null, 2), loggerCtx);
-        Logger.debug(`${amount}`, loggerCtx);
-        Logger.debug(JSON.stringify(args, null, 2), loggerCtx);
-        Logger.debug(JSON.stringify(metadata, null, 2), loggerCtx);
+        Logger.debug('createPayment() invoked', loggerCtx);
 
         try {
             const data = {
@@ -75,11 +76,12 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
 
             return {
                 amount: order.total,
-                state: args.automaticCapture ? "Settled" : "Authorized",
+                state: OrderState.Authorized,
                 transactionId: klarnaResponse.session_id,
                 metadata: {
                     public: {
-                        clientToken: klarnaResponse.client_token
+                        clientToken: klarnaResponse.client_token,
+                        payment_method_categories: klarnaResponse.payment_method_categories,
                     }
                 },
             };
