@@ -68,7 +68,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
             core_1.Logger.debug(JSON.stringify(klarnaResponse, null, 2), _1.loggerCtx);
             return {
                 amount: order.total,
-                state: OrderState.Authorized,
+                state: OrderState.Settled,
                 transactionId: klarnaResponse.session_id,
                 metadata: {
                     public: {

@@ -76,7 +76,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
 
             return {
                 amount: order.total,
-                state: OrderState.Authorized,
+                state: OrderState.Settled,
                 transactionId: klarnaResponse.session_id,
                 metadata: {
                     public: {
