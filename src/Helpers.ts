@@ -10,17 +10,17 @@ import { OrderLine, ShippingLine } from "@vendure/core";
  */
 export const convertToKlarnaAddress = (address: OrderAddress): Address => ({
     attention: undefined,
-    city: address.city,
-    country: address.countryCode,
+    city: address?.city,
+    country: address?.countryCode,
     email: undefined,
     family_name: undefined,
-    given_name: address.fullName,
-    organization_name: address.company,
-    phone: address.phoneNumber,
-    postal_code: address.postalCode,
-    region: address.province,
-    street_address: address.streetLine1,
-    street_address2: address.streetLine2,
+    given_name: address?.fullName,
+    organization_name: address?.company,
+    phone: address?.phoneNumber,
+    postal_code: address?.postalCode,
+    region: address?.province,
+    street_address: address?.streetLine1,
+    street_address2: address?.streetLine2,
     title: undefined
 });
 
@@ -35,23 +35,23 @@ export const generateOrderLines = (orderLines: OrderLine[], shippingLines: Shipp
 
     const order_lines: KlarnaOrderLine[] = orderLines.map((line) => (
         {
-            name: line.productVariant.name,
-            quantity: line.quantity,
-            tax_rate: line.taxRate,
-            total_amount: line.linePriceWithTax,
-            total_tax_amount: line.lineTax,
-            unit_price: line.unitPriceWithTax,
+            name: line?.productVariant?.name,
+            quantity: line?.quantity,
+            tax_rate: line?.taxRate,
+            total_amount: line?.linePriceWithTax,
+            total_tax_amount: line?.lineTax,
+            unit_price: line?.unitPriceWithTax,
         }
     ));
 
     const shipping_lines: KlarnaOrderLine[] = shippingLines.map((line) => (
         {
-            name: line.shippingMethod.name,
+            name: line?.shippingMethod?.name,
             quantity: 1,
-            tax_rate: line.taxRate,
-            total_amount: line.priceWithTax,
-            total_tax_amount: line.priceWithTax,
-            unit_price: line.priceWithTax,
+            tax_rate: line?.taxRate,
+            total_amount: line?.priceWithTax,
+            total_tax_amount: line?.priceWithTax,
+            unit_price: line?.priceWithTax,
         }
     ));
 
