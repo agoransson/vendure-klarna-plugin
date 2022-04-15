@@ -14,6 +14,7 @@ import { LanguageCode } from '@vendure/common/lib/generated-types';
 import { PaymentMethodArgsHash } from './types';
 import { getGateway } from './Common';
 import { loggerCtx } from '.';
+import { convertToKlarnaAddress, generateOrderLines } from './Helpers';
 
 enum OrderState {
     Authorized = "Authorized",
@@ -57,17 +58,14 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
         try {
             const data = {
                 locale: Locale.sv_SE,
+
                 order_amount: order.total,
-                order_lines: order.lines.map((value) => (
-                    {
-                        name: value.productVariant.name,
-                        quantity: value.quantity,
-                        total_amount: value.linePrice,
-                        unit_price: value.unitPrice
-                    }
-                )),
+                order_tax_amount: order.totalWithTax - order.total,
+                order_lines: generateOrderLines(order.lines, order.shippingLines),
                 purchase_country: args.purchase_country as string,
-                purchase_currency: order.currencyCode
+                purchase_currency: order.currencyCode,
+                billing_address: convertToKlarnaAddress(order.shippingAddress),
+                shipping_address: convertToKlarnaAddress(order.shippingAddress)
             };
 
             const klarnaResponse = await gateway.v100.sessions.createCreditSession(data);
@@ -76,7 +74,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
 
             return {
                 amount: order.total,
-                state: OrderState.Settled,
+                state: OrderState.Authorized,
                 transactionId: klarnaResponse.session_id,
                 metadata: {
                     public: {

@@ -1,6 +1,6 @@
 {
     "name": "@agoransson/vendure-klarna-plugin",
-    "version": "0.0.26",
+    "version": "0.0.27",
     "description": "Plugin that enables Klarna payment for Vendure ecommerce.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -21,9 +21,9 @@
     "private": false,
     "devDependencies": {
         "@babel/cli": "^7.17.6",
-        "@babel/core": "^7.17.8",
-        "@vendure/common": "^1.5.0",
-        "@vendure/core": "^1.5.0",
+        "@babel/core": "^7.17.9",
+        "@vendure/common": "^1.5.1",
+        "@vendure/core": "^1.5.1",
         "tslint": "^6.1.3",
         "typescript": "^4.6.3"
     },
@@ -31,7 +31,7 @@
         "dist/**/*"
     ],
     "dependencies": {
-        "@agoransson/klarna-payments": "^1.0.14"
+        "@agoransson/klarna-payments": "^1.0.15"
     },
     "publishConfig": {
         "access": "public"

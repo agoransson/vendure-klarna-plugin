@@ -15,6 +15,7 @@ const klarna_payments_1 = require("@agoransson/klarna-payments");
 const generated_types_1 = require("@vendure/common/lib/generated-types");
 const Common_1 = require("./Common");
 const _1 = require(".");
+const Helpers_1 = require("./Helpers");
 var OrderState;
 (function (OrderState) {
     OrderState["Authorized"] = "Authorized";
@@ -55,20 +56,18 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
             const data = {
                 locale: klarna_payments_1.Locale.sv_SE,
                 order_amount: order.total,
-                order_lines: order.lines.map((value) => ({
-                    name: value.productVariant.name,
-                    quantity: value.quantity,
-                    total_amount: value.linePrice,
-                    unit_price: value.unitPrice
-                })),
+                order_tax_amount: order.totalWithTax - order.total,
+                order_lines: (0, Helpers_1.generateOrderLines)(order.lines, order.shippingLines),
                 purchase_country: args.purchase_country,
-                purchase_currency: order.currencyCode
+                purchase_currency: order.currencyCode,
+                billing_address: (0, Helpers_1.convertToKlarnaAddress)(order.shippingAddress),
+                shipping_address: (0, Helpers_1.convertToKlarnaAddress)(order.shippingAddress)
             };
             const klarnaResponse = yield gateway.v100.sessions.createCreditSession(data);
             core_1.Logger.debug(JSON.stringify(klarnaResponse, null, 2), _1.loggerCtx);
             return {
                 amount: order.total,
-                state: OrderState.Settled,
+                state: OrderState.Authorized,
                 transactionId: klarnaResponse.session_id,
                 metadata: {
                     public: {
