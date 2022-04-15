@@ -21,6 +21,7 @@ var OrderState;
     OrderState["Authorized"] = "Authorized";
     OrderState["Settled"] = "Settled";
 })(OrderState || (OrderState = {}));
+let entityHydrator;
 /**
  * The handler for Klarna payments.
  */
@@ -48,19 +49,15 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
             label: [{ languageCode: generated_types_1.LanguageCode.en, value: 'klarna_purchase_country' }],
         },
     },
+    init: (injector) => {
+        entityHydrator = injector.get(core_1.EntityHydrator);
+    },
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
     createPayment: (ctx, order, amount, args, metadata) => __awaiter(void 0, void 0, void 0, function* () {
+        yield entityHydrator.hydrate(ctx, order, { relations: ['shippingLines.shippingMethod'] });
         const gateway = (0, Common_1.getGateway)(args);
         core_1.Logger.debug('createPayment() invoked', _1.loggerCtx);
-        core_1.Logger.debug("SHIPPING LINES", _1.loggerCtx);
-        core_1.Logger.debug(JSON.stringify(order.shippingLines, null, 2), _1.loggerCtx);
-        core_1.Logger.debug("ORDER LINES", _1.loggerCtx);
-        core_1.Logger.debug(JSON.stringify(order.lines, null, 2), _1.loggerCtx);
         try {
-            core_1.Logger.debug("PaymentMethodArgsHash", _1.loggerCtx);
-            core_1.Logger.debug(JSON.stringify(args, null, 2), _1.loggerCtx);
-            core_1.Logger.debug("PaymentMetadata", _1.loggerCtx);
-            core_1.Logger.debug(JSON.stringify(metadata, null, 2), _1.loggerCtx);
             const data = {
                 locale: klarna_payments_1.Locale.sv_SE,
                 order_amount: order.total,

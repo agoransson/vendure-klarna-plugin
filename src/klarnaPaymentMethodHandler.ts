@@ -7,7 +7,9 @@ import {
     Logger,
     SettlePaymentResult,
     SettlePaymentErrorResult,
-    Payment
+    Payment,
+    Injector,
+    EntityHydrator
 } from '@vendure/core';
 import { Locale } from '@agoransson/klarna-payments';
 import { LanguageCode } from '@vendure/common/lib/generated-types';
@@ -20,6 +22,8 @@ enum OrderState {
     Authorized = "Authorized",
     Settled = "Settled"
 }
+
+let entityHydrator: EntityHydrator;
 
 /**
  * The handler for Klarna payments.
@@ -49,25 +53,20 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
         },
     },
 
+    init: (injector: Injector) => {
+        entityHydrator = injector.get(EntityHydrator);
+    },
+
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
 
     createPayment: async (ctx: RequestContext, order: Order, amount: number, args: PaymentMethodArgsHash, metadata: PaymentMetadata): Promise<CreatePaymentResult> => {
+        await entityHydrator.hydrate(ctx, order, { relations: ['shippingLines.shippingMethod']});
+
         const gateway = getGateway(args);
 
         Logger.debug('createPayment() invoked', loggerCtx);
-
-        Logger.debug("SHIPPING LINES", loggerCtx);
-        Logger.debug(JSON.stringify(order.shippingLines, null, 2), loggerCtx);
-
-        Logger.debug("ORDER LINES", loggerCtx);
-        Logger.debug(JSON.stringify(order.lines, null, 2), loggerCtx);
+        
         try {
-
-        Logger.debug("PaymentMethodArgsHash", loggerCtx);
-        Logger.debug(JSON.stringify(args, null, 2), loggerCtx);
-        Logger.debug("PaymentMetadata", loggerCtx);
-        Logger.debug(JSON.stringify(metadata, null, 2), loggerCtx);
-
             const data = {
                 locale: Locale.sv_SE,
 
