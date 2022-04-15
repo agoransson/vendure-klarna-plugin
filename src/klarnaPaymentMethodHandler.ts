@@ -113,7 +113,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
     // export declare type SettlePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, payment: Payment, args: ConfigArgValues<T>) => SettlePaymentResult | SettlePaymentErrorResult | Promise<SettlePaymentResult | SettlePaymentErrorResult>;
 
     settlePayment: async (ctx: RequestContext, order: Order, payment: Payment, args: PaymentMethodArgsHash): Promise<SettlePaymentResult | SettlePaymentErrorResult> => {
-        await entityHydrator.hydrate(ctx, order, { relations: ['shippingLines.shippingMethod']});
+        await entityHydrator.hydrate(ctx, order, { relations: ['lines', 'shippingLines.shippingMethod']});
         
         const gateway = getGateway(args);
 
