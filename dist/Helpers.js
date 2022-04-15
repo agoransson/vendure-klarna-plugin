@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateOrderLines = exports.convertToKlarnaAddress = void 0;
+exports.convertToKlarnaTaxRate = exports.generateOrderLines = exports.convertToKlarnaAddress = void 0;
 const klarna_payments_1 = require("@agoransson/klarna-payments");
 /**
  * Convert Vendure OrderAddress to Klarna Address.
@@ -42,7 +42,7 @@ const generateOrderLines = (orderLines, shippingLines) => {
             product_url: undefined,
             quantity: line === null || line === void 0 ? void 0 : line.quantity,
             reference: line === null || line === void 0 ? void 0 : line.productVariant.sku,
-            tax_rate: line === null || line === void 0 ? void 0 : line.taxRate,
+            tax_rate: (0, exports.convertToKlarnaTaxRate)(line === null || line === void 0 ? void 0 : line.taxRate),
             total_amount: line === null || line === void 0 ? void 0 : line.linePriceWithTax,
             total_discount_amount: 0,
             total_tax_amount: line === null || line === void 0 ? void 0 : line.lineTax,
@@ -60,7 +60,7 @@ const generateOrderLines = (orderLines, shippingLines) => {
             product_url: undefined,
             quantity: 1,
             reference: undefined,
-            tax_rate: line === null || line === void 0 ? void 0 : line.taxRate,
+            tax_rate: (0, exports.convertToKlarnaTaxRate)(line === null || line === void 0 ? void 0 : line.taxRate),
             total_amount: line === null || line === void 0 ? void 0 : line.priceWithTax,
             total_discount_amount: 0,
             total_tax_amount: (line === null || line === void 0 ? void 0 : line.priceWithTax) - (line === null || line === void 0 ? void 0 : line.price),
@@ -71,4 +71,13 @@ const generateOrderLines = (orderLines, shippingLines) => {
     return [...order_lines, ...shipping_lines];
 };
 exports.generateOrderLines = generateOrderLines;
+/**
+ * Convert to a taxrate representation acceptable by Klarna, with two implicit decimals.
+ * I.e. 19% will be 1900.
+ *
+ * @param taxRate The taxrate (in percent, without decimals).
+ * @returns The klarna taxrate - with two implicit decimals.
+ */
+const convertToKlarnaTaxRate = (taxRate) => (taxRate * 100);
+exports.convertToKlarnaTaxRate = convertToKlarnaTaxRate;
 //# sourceMappingURL=Helpers.js.map

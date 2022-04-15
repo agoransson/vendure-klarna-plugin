@@ -42,7 +42,7 @@ export const generateOrderLines = (orderLines: OrderLine[], shippingLines: Shipp
             product_url: undefined,
             quantity: line?.quantity,
             reference: line?.productVariant.sku,
-            tax_rate: line?.taxRate,
+            tax_rate: convertToKlarnaTaxRate(line?.taxRate),
             total_amount: line?.linePriceWithTax,
             total_discount_amount: 0,
             total_tax_amount: line?.lineTax,
@@ -60,7 +60,7 @@ export const generateOrderLines = (orderLines: OrderLine[], shippingLines: Shipp
             product_url: undefined,
             quantity: 1,
             reference: undefined,
-            tax_rate: line?.taxRate,
+            tax_rate: convertToKlarnaTaxRate(line?.taxRate),
             total_amount: line?.priceWithTax,
             total_discount_amount: 0,
             total_tax_amount: line?.priceWithTax - line?.price,
@@ -71,3 +71,14 @@ export const generateOrderLines = (orderLines: OrderLine[], shippingLines: Shipp
 
     return [...order_lines, ...shipping_lines];
 }
+
+/**
+ * Convert to a taxrate representation acceptable by Klarna, with two implicit decimals.
+ * I.e. 19% will be 1900.
+ * 
+ * @param taxRate The taxrate (in percent, without decimals).
+ * @returns The klarna taxrate - with two implicit decimals.
+ */
+export const convertToKlarnaTaxRate = (taxRate: number) => (
+    taxRate * 100
+)

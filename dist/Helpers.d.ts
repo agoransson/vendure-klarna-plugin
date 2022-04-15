@@ -16,3 +16,11 @@ export declare const convertToKlarnaAddress: (address: OrderAddress) => Address;
  * @returns Klarna OrderLine, consisting of Vendure OrderLines and Vendure ShippingLines.
  */
 export declare const generateOrderLines: (orderLines: OrderLine[], shippingLines: ShippingLine[]) => KlarnaOrderLine[];
+/**
+ * Convert to a taxrate representation acceptable by Klarna, with two implicit decimals.
+ * I.e. 19% will be 1900.
+ *
+ * @param taxRate The taxrate (in percent, without decimals).
+ * @returns The klarna taxrate - with two implicit decimals.
+ */
+export declare const convertToKlarnaTaxRate: (taxRate: number) => number;
