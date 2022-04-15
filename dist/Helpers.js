@@ -63,7 +63,7 @@ const generateOrderLines = (orderLines, shippingLines) => {
             tax_rate: line === null || line === void 0 ? void 0 : line.taxRate,
             total_amount: line === null || line === void 0 ? void 0 : line.priceWithTax,
             total_discount_amount: 0,
-            total_tax_amount: line === null || line === void 0 ? void 0 : line.priceWithTax,
+            total_tax_amount: (line === null || line === void 0 ? void 0 : line.priceWithTax) - (line === null || line === void 0 ? void 0 : line.price),
             type: klarna_payments_1.OrderType.SHIPPING_FEE,
             unit_price: line === null || line === void 0 ? void 0 : line.priceWithTax,
         });

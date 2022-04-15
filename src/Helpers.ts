@@ -63,7 +63,7 @@ export const generateOrderLines = (orderLines: OrderLine[], shippingLines: Shipp
             tax_rate: line?.taxRate,
             total_amount: line?.priceWithTax,
             total_discount_amount: 0,
-            total_tax_amount: line?.priceWithTax,
+            total_tax_amount: line?.priceWithTax - line?.price,
             type: OrderType.SHIPPING_FEE,
             unit_price: line?.priceWithTax,
         }
