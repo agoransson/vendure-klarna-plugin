@@ -48,6 +48,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
             label: [{ languageCode: LanguageCode.en, value: 'klarna_purchase_country' }],
         },
     },
+
     // export declare type CreatePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, amount: number, args: ConfigArgValues<T>, metadata: PaymentMetadata) => CreatePaymentResult | CreatePaymentErrorResult | Promise<CreatePaymentResult | CreatePaymentErrorResult>;
 
     createPayment: async (ctx: RequestContext, order: Order, amount: number, args: PaymentMethodArgsHash, metadata: PaymentMetadata): Promise<CreatePaymentResult> => {
@@ -61,6 +62,12 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
         Logger.debug("ORDER LINES", loggerCtx);
         Logger.debug(JSON.stringify(order.lines, null, 2), loggerCtx);
         try {
+
+        Logger.debug("PaymentMethodArgsHash", loggerCtx);
+        Logger.debug(JSON.stringify(args, null, 2), loggerCtx);
+        Logger.debug("PaymentMetadata", loggerCtx);
+        Logger.debug(JSON.stringify(metadata, null, 2), loggerCtx);
+
             const data = {
                 locale: Locale.sv_SE,
 

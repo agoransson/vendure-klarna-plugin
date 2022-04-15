@@ -35,13 +35,13 @@ export const generateOrderLines = (orderLines: OrderLine[], shippingLines: Shipp
 
     const order_lines: KlarnaOrderLine[] = orderLines.map((line) => (
         {
-            image_url: line?.productVariant?.featuredAsset?.source,
+            image_url: line?.productVariant?.featuredAsset?.preview,
             merchant_data: line?.order?.code,
-            name: line?.productVariant?.product?.name,
+            name: line?.productVariant?.name,
             product_identifiers: undefined,
             product_url: undefined,
             quantity: line?.quantity,
-            reference: line?.productVariant.id.toLocaleString(),
+            reference: line?.productVariant.sku,
             tax_rate: line?.taxRate,
             total_amount: line?.linePriceWithTax,
             total_discount_amount: 0,

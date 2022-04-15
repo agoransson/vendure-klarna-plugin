@@ -57,6 +57,10 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
         core_1.Logger.debug("ORDER LINES", _1.loggerCtx);
         core_1.Logger.debug(JSON.stringify(order.lines, null, 2), _1.loggerCtx);
         try {
+            core_1.Logger.debug("PaymentMethodArgsHash", _1.loggerCtx);
+            core_1.Logger.debug(JSON.stringify(args, null, 2), _1.loggerCtx);
+            core_1.Logger.debug("PaymentMetadata", _1.loggerCtx);
+            core_1.Logger.debug(JSON.stringify(metadata, null, 2), _1.loggerCtx);
             const data = {
                 locale: klarna_payments_1.Locale.sv_SE,
                 order_amount: order.total,

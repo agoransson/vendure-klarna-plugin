@@ -33,15 +33,15 @@ exports.convertToKlarnaAddress = convertToKlarnaAddress;
  */
 const generateOrderLines = (orderLines, shippingLines) => {
     const order_lines = orderLines.map((line) => {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d;
         return ({
-            image_url: (_b = (_a = line === null || line === void 0 ? void 0 : line.productVariant) === null || _a === void 0 ? void 0 : _a.featuredAsset) === null || _b === void 0 ? void 0 : _b.source,
+            image_url: (_b = (_a = line === null || line === void 0 ? void 0 : line.productVariant) === null || _a === void 0 ? void 0 : _a.featuredAsset) === null || _b === void 0 ? void 0 : _b.preview,
             merchant_data: (_c = line === null || line === void 0 ? void 0 : line.order) === null || _c === void 0 ? void 0 : _c.code,
-            name: (_e = (_d = line === null || line === void 0 ? void 0 : line.productVariant) === null || _d === void 0 ? void 0 : _d.product) === null || _e === void 0 ? void 0 : _e.name,
+            name: (_d = line === null || line === void 0 ? void 0 : line.productVariant) === null || _d === void 0 ? void 0 : _d.name,
             product_identifiers: undefined,
             product_url: undefined,
             quantity: line === null || line === void 0 ? void 0 : line.quantity,
-            reference: line === null || line === void 0 ? void 0 : line.productVariant.id.toLocaleString(),
+            reference: line === null || line === void 0 ? void 0 : line.productVariant.sku,
             tax_rate: line === null || line === void 0 ? void 0 : line.taxRate,
             total_amount: line === null || line === void 0 ? void 0 : line.linePriceWithTax,
             total_discount_amount: 0,
