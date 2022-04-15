@@ -1,4 +1,4 @@
-import { Address, OrderLine as KlarnaOrderLine  } from "@agoransson/klarna-payments"
+import { Address, OrderLine as KlarnaOrderLine, OrderType  } from "@agoransson/klarna-payments"
 import { OrderAddress} from "@vendure/common/lib/generated-types"
 import { OrderLine, ShippingLine } from "@vendure/core";
 
@@ -35,22 +35,36 @@ export const generateOrderLines = (orderLines: OrderLine[], shippingLines: Shipp
 
     const order_lines: KlarnaOrderLine[] = orderLines.map((line) => (
         {
-            name: line?.productVariant?.name,
+            image_url: line?.productVariant?.featuredAsset?.source,
+            merchant_data: line?.order?.code,
+            name: line?.productVariant?.product?.name,
+            product_identifiers: undefined,
+            product_url: undefined,
             quantity: line?.quantity,
+            reference: line?.productVariant.id.toLocaleString(),
             tax_rate: line?.taxRate,
             total_amount: line?.linePriceWithTax,
+            total_discount_amount: 0,
             total_tax_amount: line?.lineTax,
+            type: OrderType.PHYSICAL,
             unit_price: line?.unitPriceWithTax,
         }
     ));
 
     const shipping_lines: KlarnaOrderLine[] = shippingLines.map((line) => (
         {
+            image_url: undefined,
+            merchant_data: line?.shippingMethodId.toLocaleString(),
             name: line?.shippingMethod?.name,
+            product_identifiers: undefined,
+            product_url: undefined,
             quantity: 1,
+            reference: undefined,
             tax_rate: line?.taxRate,
             total_amount: line?.priceWithTax,
+            total_discount_amount: 0,
             total_tax_amount: line?.priceWithTax,
+            type: OrderType.SHIPPING_FEE,
             unit_price: line?.priceWithTax,
         }
     ));

@@ -55,6 +55,11 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
 
         Logger.debug('createPayment() invoked', loggerCtx);
 
+        Logger.debug("SHIPPING LINES", loggerCtx);
+        Logger.debug(JSON.stringify(order.shippingLines, null, 2), loggerCtx);
+
+        Logger.debug("ORDER LINES", loggerCtx);
+        Logger.debug(JSON.stringify(order.lines, null, 2), loggerCtx);
         try {
             const data = {
                 locale: Locale.sv_SE,
