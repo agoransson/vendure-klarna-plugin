@@ -96,6 +96,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
     }),
     // export declare type SettlePaymentFn<T extends ConfigArgs> = (ctx: RequestContext, order: Order, payment: Payment, args: ConfigArgValues<T>) => SettlePaymentResult | SettlePaymentErrorResult | Promise<SettlePaymentResult | SettlePaymentErrorResult>;
     settlePayment: (ctx, order, payment, args) => __awaiter(void 0, void 0, void 0, function* () {
+        yield entityHydrator.hydrate(ctx, order, { relations: ['shippingLines.shippingMethod'] });
         const gateway = (0, Common_1.getGateway)(args);
         core_1.Logger.debug('Settle payment', _1.loggerCtx);
         core_1.Logger.debug(JSON.stringify(order, null, 2), _1.loggerCtx);
