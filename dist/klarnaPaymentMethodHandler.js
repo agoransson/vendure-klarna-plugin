@@ -63,6 +63,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
                 billing_address: (0, Helpers_1.convertToKlarnaAddress)(order.shippingAddress),
                 shipping_address: (0, Helpers_1.convertToKlarnaAddress)(order.shippingAddress)
             };
+            core_1.Logger.debug(JSON.stringify(data, null, 2), _1.loggerCtx);
             const klarnaResponse = yield gateway.v100.sessions.createCreditSession(data);
             core_1.Logger.debug(JSON.stringify(klarnaResponse, null, 2), _1.loggerCtx);
             return {

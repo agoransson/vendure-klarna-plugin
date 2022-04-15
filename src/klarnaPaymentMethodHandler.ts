@@ -68,6 +68,8 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
                 shipping_address: convertToKlarnaAddress(order.shippingAddress)
             };
 
+            Logger.debug(JSON.stringify(data, null, 2), loggerCtx);
+
             const klarnaResponse = await gateway.v100.sessions.createCreditSession(data);
 
             Logger.debug(JSON.stringify(klarnaResponse, null, 2), loggerCtx);
