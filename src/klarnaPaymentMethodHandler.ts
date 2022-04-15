@@ -70,7 +70,7 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
             const data = {
                 locale: Locale.sv_SE,
 
-                order_amount: order.total,
+                order_amount: order.totalWithTax,
                 order_tax_amount: order.totalWithTax - order.total,
                 order_lines: generateOrderLines(order.lines, order.shippingLines),
                 purchase_country: args.purchase_country as string,

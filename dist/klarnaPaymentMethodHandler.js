@@ -60,7 +60,7 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
         try {
             const data = {
                 locale: klarna_payments_1.Locale.sv_SE,
-                order_amount: order.total,
+                order_amount: order.totalWithTax,
                 order_tax_amount: order.totalWithTax - order.total,
                 order_lines: (0, Helpers_1.generateOrderLines)(order.lines, order.shippingLines),
                 purchase_country: args.purchase_country,
