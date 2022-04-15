@@ -121,20 +121,19 @@ export const klarnaPaymentMethodHandler: PaymentMethodHandler = new PaymentMetho
         Logger.debug(JSON.stringify(args, null, 2), loggerCtx);
 
         try {
-            const klarnaResponse = await gateway.v100.orders.createOrder("" /* TODO: Read auth token from args? */ , {
+            const data = {
                 locale: Locale.sv_SE,
-                order_amount: order.total,
-                order_lines: order.lines.map((value) => (
-                    {
-                        name: value.productVariant.name,
-                        quantity: value.quantity,
-                        total_amount: value.linePrice,
-                        unit_price: value.unitPrice
-                    }
-                )),
+
+                order_amount: order.totalWithTax,
+                order_tax_amount: order.totalWithTax - order.total,
+                order_lines: generateOrderLines(order.lines, order.shippingLines),
                 purchase_country: args.purchase_country as string,
-                purchase_currency: order.currencyCode
-            });
+                purchase_currency: order.currencyCode,
+                billing_address: convertToKlarnaAddress(order.shippingAddress),
+                shipping_address: convertToKlarnaAddress(order.shippingAddress)
+            };
+
+            const klarnaResponse = await gateway.v100.orders.createOrder("" /* TODO: Read auth token from args? */ , data);
 
             if (klarnaResponse.fraud_status === "ACCEPTED") {
                 return { 

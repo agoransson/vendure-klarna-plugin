@@ -102,18 +102,17 @@ exports.klarnaPaymentMethodHandler = new core_1.PaymentMethodHandler({
         core_1.Logger.debug(JSON.stringify(payment, null, 2), _1.loggerCtx);
         core_1.Logger.debug(JSON.stringify(args, null, 2), _1.loggerCtx);
         try {
-            const klarnaResponse = yield gateway.v100.orders.createOrder("" /* TODO: Read auth token from args? */, {
+            const data = {
                 locale: klarna_payments_1.Locale.sv_SE,
-                order_amount: order.total,
-                order_lines: order.lines.map((value) => ({
-                    name: value.productVariant.name,
-                    quantity: value.quantity,
-                    total_amount: value.linePrice,
-                    unit_price: value.unitPrice
-                })),
+                order_amount: order.totalWithTax,
+                order_tax_amount: order.totalWithTax - order.total,
+                order_lines: (0, Helpers_1.generateOrderLines)(order.lines, order.shippingLines),
                 purchase_country: args.purchase_country,
-                purchase_currency: order.currencyCode
-            });
+                purchase_currency: order.currencyCode,
+                billing_address: (0, Helpers_1.convertToKlarnaAddress)(order.shippingAddress),
+                shipping_address: (0, Helpers_1.convertToKlarnaAddress)(order.shippingAddress)
+            };
+            const klarnaResponse = yield gateway.v100.orders.createOrder("" /* TODO: Read auth token from args? */, data);
             if (klarnaResponse.fraud_status === "ACCEPTED") {
                 return {
                     success: true,
